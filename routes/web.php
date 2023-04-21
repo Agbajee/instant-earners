@@ -197,7 +197,7 @@ Route::middleware('auth', 'moderator')->group(function() {
     
 });
 
-Route::middleware('auth')->group(function() {
+Route::middleware('auth', 'admin')->group(function() {
     Route::get('/admin/',[AdminController::class, 'index'])->name('admin');
     Route::post('/admin/email/{id}',[AdminController::class, 'resendVerification'])->name('resendVerification');
     Route::get('/admin/general-mail',[AdminController::class, 'sendGeneralMail'])->name('sendGeneralMail');
