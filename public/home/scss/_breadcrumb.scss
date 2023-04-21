@@ -1,0 +1,445 @@
+/*================== breadcrumb_area css ==============*/
+.breadcrumb_area{
+    background-image: -moz-linear-gradient(-86deg, #7121ff 0%, #21d4fd 100%);
+    background-image: -webkit-linear-gradient(-86deg, #7121ff 0%, #21d4fd 100%);
+    background-image: -ms-linear-gradient(-86deg, #7121ff 0%, #21d4fd 100%);
+    text-align: center;
+    color: #fff;
+    padding: 210px 0px 175px;
+    position: relative;
+    z-index: 1;
+    &:before{
+        content: "";
+        background: url(../img/new_shap.png) no-repeat scroll right bottom;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        opacity: 0.4;
+        z-index: -1;
+    }
+    &:after{
+        content: "";
+        background: url(../img/new_shap_two.png) no-repeat scroll right bottom;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        z-index: -1;
+    }
+    p{
+        font-family: $pop;
+        font-weight: 400;
+        padding-top: 15px;
+        margin-bottom: 0px;
+    }
+}
+.page-title{
+    font: 900 38px/45px $pro;
+    margin-bottom: 0px;
+    text-transform: capitalize;
+}
+.breadcrumb{
+    background: transparent;
+    margin-bottom: 0px;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+    li{
+        font-size: 18px;
+        font-weight: 600;
+        font-family: $soc;
+        position: relative;
+        a{
+            color: #fff;
+        }
+        &.active{
+            &:after{
+                content: "";
+                width: 100%;
+                height: 1px;
+                background: #fff;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+        }
+        & + li{
+            margin-left: 26px;
+            &:before{
+                content: "-";
+                display: inline-block;
+                color: #fff;
+                font-weight: 500;
+                position: absolute;
+                left: -16px;
+            }
+        }
+    }
+}
+/*================== breadcrumb_area css ==============*/
+
+/*================== banner_area css ==============*/
+.banner_area{
+	background-image: -moz-linear-gradient( 58deg, rgb(99,47,253) 0%, rgb(82,134,253) 64%, rgb(64,220,253) 100%);
+	background-image: -webkit-linear-gradient( 58deg, rgb(99,47,253) 0%, rgb(82,134,253) 64%, rgb(64,220,253) 100%);
+	background-image: -ms-linear-gradient( 58deg, rgb(99,47,253) 0%, rgb(82,134,253) 64%, rgb(64,220,253) 100%);
+    text-align: center;
+    color: #fff;
+    padding: 210px 0px 175px;
+    position: relative;
+    z-index: 4;
+	min-height: 500px;
+    p{
+        font-size: 18px;
+        margin-bottom: 0;
+        padding-top: 8px;
+        font-family: "Source Sans Pro", sans-serif;
+    }
+}
+.elements{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    z-index: -1;
+    li{
+        &:first-child{
+            position: absolute;
+            left: 14%;
+            top: 20px;
+            transform: translateX(-50%);
+            animation: 28s cloud infinite linear;
+        }
+        &:nth-child(2){
+            position: absolute;
+            left: 0%;
+            top: 42px;
+            transform: translateX(-70%);
+            animation: 28s animateCloud infinite linear;
+            opacity: 0;
+        }
+        &:nth-child(3){
+            position: absolute;
+            left: 0%;
+            top: 100px;
+            transform: translateX(-70%);
+            animation: 28s 4s animateCloud infinite linear;
+            opacity: 0;
+        }
+        &:nth-child(4){
+            position: absolute;
+            left: 0%;
+            top: 120px;
+            transform: translateX(-70%);
+            animation: animateCloud 35s 5s linear infinite;
+            opacity: 0;
+        }
+        &:nth-child(5){
+            position: absolute;
+            left: 60%;
+            top: 150px;
+            transform: translateX(-50%);
+            animation: rotateX 5s 0.7s linear infinite;
+            opacity: 0;
+        }
+        &:nth-child(6){
+            position: absolute;
+            left: 60%;
+            top: 150px;
+            transform: translateX(-50%);
+            animation: rotateX 5s 3s linear infinite;
+            opacity: 0;
+        }
+        &:nth-child(7){
+            position: absolute;
+            left: 15%;
+            top: 120px;
+            transform: translateX(-50%);
+            animation: rotateX 5s 3s linear infinite;
+            opacity: 0;
+        }
+        &:nth-child(8){
+            position: absolute;
+            right: 10%;
+            top: 120px;
+            transform: translateX(-50%);
+            animation: jurk 5s 3s linear infinite alternate;
+        }
+    }
+}
+.banner_teckture{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.car {
+    position: absolute;
+    bottom: 40px;
+    z-index: 10;
+    opacity: 0.2;
+    -moz-animation: myfirst 12s linear infinite;
+    -webkit-animation: myfirst 12s linear infinite;
+    &.car_two{
+        bottom: 22px;
+        -moz-animation: myfirst 18s linear infinite;
+        -webkit-animation: myfirst 18s linear infinite;
+    }
+}
+
+@-moz-keyframes myfirst {
+    0% {
+        left: -25%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@-webkit-keyframes myfirst {
+    0% {
+        left: -25%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.tyre {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #a471de;
+    position: absolute;
+    z-index: 2;
+    left: 16px;
+    top: 33px;
+    -moz-animation: tyre-rotate 1s infinite linear;
+    -webkit-animation: tyre-rotate 1s infinite linear;
+}
+
+@-moz-keyframes tyre-rotate {
+    from {
+        -moz-transform: rotate(-360deg);
+    }
+
+    to {
+        -moz-transform: rotate(0deg);
+    }
+}
+
+@-webkit-keyframes tyre-rotate {
+    from {
+        -webkit-transform: rotate(-360deg);
+    }
+
+    to {
+        -webkit-transform: rotate(0deg);
+    }
+}
+
+.tyre:before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #f8b0b5;
+    opacity: 0.9;
+    position: absolute;
+    top: 2.5px;
+    left: 2.5px;
+}
+
+.gap {
+    background: #3f3f40;
+    width: 2px;
+    height: 3px;
+    position: absolute;
+    left: 9px;
+    top: 4px;
+    -webkit-box-shadow: 0 9px 0 #3f3f40;
+    box-shadow: 0 8px 0 #3f3f40;
+}
+
+.gap:before {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 3px;
+    position: absolute;
+    background: #3f3f40;
+    -webkit-box-shadow: 0 12px 0 #3f3f40;
+    box-shadow: 0 9px 0 #3f3f40;
+    -webkit-transform: rotate(-90deg);
+    -webkit-transform-origin: 0 7px;
+    -moz-transform: rotate(-90deg);
+    -moz-transform-origin: 0 7px;
+    z-index: 3;
+    left: 2px;
+}
+.tyre.front {
+    left: 58px;
+}
+
+.car-shadow {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    bottom: -15px;
+    box-shadow: -5px 4px 55px 3px #000000;
+    left: -7px;
+    position: absolute;
+    width: 136px;
+}
+/*noise css*/
+
+
+
+@keyframes cloud {
+    0% {
+        left: 14%;
+		top: 20px;
+		opacity: 0;
+    }
+    20% {
+        left: 44%;
+		top: 100px;
+		opacity: 1;
+    }
+    40% {
+        left: 65%;
+		top: 0px;
+		opacity: 1;
+    }
+    60% {
+        left: 80%;
+		top: 60px;
+		opacity: 1;
+    }
+    80% {
+        left: 90%;
+		top: 60px;
+		opacity: .5;
+    }
+    100% {
+        left: 100%;
+		top: 20px;
+		opacity: 0;
+    }
+}
+
+@keyframes animateCloud {
+    0% {
+        left: -20%;
+        opacity: 1;
+    }
+    100% {
+        left: 100%;
+        opacity: 1;
+    }
+}
+@keyframes rotateX {
+    0% {
+        top: 150px;
+		opacity: 1;
+    }
+    100% {
+        top: -50px;
+		opacity: 0;
+    }
+}
+@keyframes jurk {
+    0% {
+        transform: translate3d(-10px, -10px, 0);
+		opacity: 1;
+    }
+    50% {
+        transform: translate3d(-20px, 20px, 0);
+		opacity: 1;
+    }
+    100% {
+        transform: translate3d(30px, 0px, 0);
+		opacity: 1;
+    }
+}
+
+@keyframes jurk2 {
+    0% {
+        transform: translate3d(-1px, -2px, 0);
+		opacity: 1;
+    }
+    50% {
+        transform: translate3d(2px, 5px, 2px);
+		opacity: 1;
+    }
+    100% {
+        transform: translate3d(3px, 0px, 0px);
+		opacity: 1;
+    }
+}
+
+@keyframes jump {
+    0% {
+        top: 0px;
+    }
+
+    25% {
+        top: -20px;
+    }
+
+    50% {
+        top: 0px;
+    }
+
+    75% {
+        top: 0px;
+    }
+}
+
+/*================== breadcrumb_area css ==============*/
+
+/*============ breadcrumb_area_three css ===========*/
+.breadcrumb_area_three {
+  position: relative;
+  z-index: 1;
+  height: 415px;
+}
+
+.breadcrumb_area_three:before {
+  content: "";
+  width: 100%;
+  height: 110%;
+  background: url(../img/d_shap.png) no-repeat scroll center 0;
+  position: absolute;
+  background-size: cover;
+  z-index: 0;
+  top: 0;
+  left: 0;
+}
+
+.breadcrumb_shap {
+  position: absolute;
+  z-index: -1;
+  width: 106%;
+  top: -692px;
+  height: 1113px;
+  left: -20px;
+}
+
+.breadcrumb_shap_two {
+  position: absolute;
+  z-index: -2;
+  width: 100%;
+  height: 1036px;
+  top: -620px;
+  right: -50px;
+}
+
+/*============ breadcrumb_area_three css ===========*/

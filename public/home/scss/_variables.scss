@@ -1,0 +1,40 @@
+/*font Variables*/
+$soc: 'Source Sans Pro', sans-serif;
+$pop: 'Poppins', sans-serif;
+$open: 'Open Sans', sans-serif;
+$lato: 'Lato', sans-serif;
+$pro: 'Product';
+
+/*=================== fonts ====================*/
+@import url('https://fonts.googleapis.com/css?family=Lato|Open+Sans|Poppins:400,500,600,700|Source+Sans+Pro:300,400,500,600,700');
+
+@font-face {
+    font-family: 'Product'; /*a name to be used later*/
+    src: url('../vendors/fonts/Product-Sans-Bold.woff'); /*URL to font*/
+    font-weight:700;
+}
+@font-face {
+    font-family: 'Product'; /*a name to be used later*/
+    src: url('../vendors/fonts/Product-Sans-Regular.woff'); /*URL to font*/
+    font-weight:400;
+}
+
+
+// Mixins
+@mixin transition($property: all, $duration: 300ms, $animate: linear, $delay:0s){
+    transition: $property $duration $animate $delay; 
+}
+
+// Placeholder Mixins
+
+@mixin placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}
+
+.col-md-offset-right-1,.col-lg-offset-right-1{
+    margin-right: 8.33333333%;
+}
+// Font family link

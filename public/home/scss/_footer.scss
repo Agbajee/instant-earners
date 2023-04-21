@@ -1,0 +1,502 @@
+/*=============== saas_footer_area css=============*/
+.saas_footer_area{
+    background: #f1f4fa;
+    padding-top: 100px;
+    border-bottom: 5px solid #11bdff;
+}
+.s_footer_top{
+    .border_bottom{
+        width: 100%;
+        height: 1px;
+        background: #dae1ef;
+        margin-top: 95px;
+    }
+}
+.f_widget{
+    font-family: $soc;
+    p{
+        font-size: 16px;
+        line-height: 28px;
+        color: #82879a;
+    }
+    .f_title{
+        font-size: 22px;
+        font-weight: 700;
+        color: #051441;
+        margin-bottom: 30px;
+        font-family: $soc;
+    }
+    .f_title_two{
+        font: 600 22px/15px $pop;
+        color: #252a32;
+        margin-bottom: 36px;
+    }
+    .f_logo{
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    &.about_widget{
+        padding-right: 75px;
+        
+    }
+    &.link_widget{
+        padding-top: 13px;
+        ul{
+            margin-bottom: 0px;
+            li{
+                a{
+                    font-size: 16px;
+                    line-height: 25px;
+                    font-weight: 400;
+                    color: #82879a;
+                    position: relative;
+                    transition: color 0.2s linear;
+                    display: inline-block;
+                    &:before{
+                        content: "";
+                        position: absolute;
+                        width: 0;
+                        bottom: 0;
+                        height: 1px;
+                        left: 0;
+                        transition: width 0.2s linear;
+                        background: #ff9700;
+                    }
+                    &:hover{
+                        color: #ff9700;
+                        &:before{
+                            width: 100%;
+                        }
+                    }
+                }
+                &:not(:last-child){
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+    &.subscribe_widget{
+        padding-top: 13px;
+        p{
+            margin-bottom: 32px;
+        }
+    }
+    .subscrib_form{
+        .form-control{
+            font-size: 16px;
+            font-weight: 400;
+            color: #051441;
+            background: #ebeff6;
+            border: 1px solid #e3e6ed;
+            border-radius: 3px;
+            font-family: $soc;
+            padding: 0px 0px 0px 30px;
+            height: 55px;
+            box-shadow: none;
+            position: relative;
+            z-index: 0;
+            @include placeholder{
+                color: #9398ab;
+            }
+        }
+        button{
+            background: transparent;
+            border: 0px;
+            padding: 0px;
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+            font-size: 14px;
+            color: #051441;
+        }
+    }
+}
+.footer_bottom{
+    padding: 25px 0px;
+    .coppyright_info{
+        .f_social{
+            padding-bottom: 8px;
+            a{
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                display: inline-block;
+                font-size: 16px;
+                line-height: 32px;
+                color: #d7d7d7;
+                text-align: center;
+                border: 1px solid #d7d7d7;
+                position: relative;
+                margin-right: 12px;
+                transition: all 0.3s linear;
+                z-index: 1;
+                &:before{
+                    content: "";
+                    top: 0px;
+                    left: 0px;
+                    right: 0px;
+                    bottom: 0px;
+                    position: absolute;
+                    background-image: -moz-linear-gradient( 40deg, rgb(255,198,0) 0%, rgb(255,150,0) 100%);
+                    background-image: -webkit-linear-gradient( 40deg, rgb(255,198,0) 0%, rgb(255,150,0) 100%);
+                    background-image: -ms-linear-gradient( 40deg, rgb(255,198,0) 0%, rgb(255,150,0) 100%);
+                    border-radius: 50%;
+                    opacity: 0;
+                    transition: opacity 0.3s linear;
+                    z-index: -1;
+                }
+                &:hover{
+                    color: #fff;
+                    border-color: transparent;
+                    &:before{
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+        p{
+            font-size: 14px;
+            color: #9398ab;
+            font-family: $pop;
+            font-weight: 400;
+            margin-bottom: 0px;
+            a{
+                color: #9398ab;
+            }
+        }
+        .scroll_btn{
+            width: 45px;
+            height: 45px;
+            text-align: center;
+            line-height: 45px;
+            font-size: 25px;
+            color: #9398ab;
+            box-shadow: 0px 20px 20px 0px rgba(0, 8, 32, 0.08);
+            background: #fff;
+            display: inline-block;
+            border-radius: 50%;
+        }
+    }
+}
+/*=============== saas_footer_area css=============*/
+
+/*=============== saas_footer_area_two css=============*/
+.saas_footer_area_two{
+    padding-top: 120px;
+    .f_widget{
+        .f_title{
+            color: #282b31;
+            font-family: $pop;
+            font-weight: 600;
+        }
+        p{
+            font-family: $lato;
+            color: #676b75;
+        }
+        &.link_widget ul li a{
+            color: #676b75;
+            font-weight: 400;
+            font-family: $lato;
+            &:hover{
+                color: #ff9700;
+            }
+        }
+        .subscrib_form .form-control{
+            background: transparent;
+        }
+    } 
+    .border_bottom{
+        background: #f5f5f5;
+    }
+    .footer_bottom{
+        .coppyright_info{
+            align-items: center;
+            p{
+                color: #676b75;
+                opacity: 0.8;
+            }
+        }
+    }
+}
+/*=============== saas_footer_area_two css=============*/
+
+/*=============== app_footer_area css=============*/
+.app_footer_area{
+    background: #fafaff;
+    padding-top: 265px;
+    .border_bottom{
+        width: 100%;
+        height: 1px;
+        background: #efeff5;
+        margin-top: 80px;
+    }
+}
+.app_footer_top{
+    .download_widget{
+        ul{
+            margin-bottom: 0px;
+            li{
+                a{
+                    font: 400 16px/34px $lato;
+                    color: #7f8ba0;
+                    transition: color 0.3s linear;
+                    &:hover{
+                        color: #11bdff;
+                    }
+                }
+            }
+        }
+    }
+}
+.app_footer_bottom{
+    text-align: center;
+    padding: 20px 0px;
+    p{
+        margin-bottom: 0px;
+        font: 400 16px/28px $lato;
+        color: #99a1af;
+        a{
+            color: #99a1af;
+            transition: color 0.3s linear;
+            &:hover{
+                color: #11bdff;
+            }
+        }
+    }
+}
+/*=============== app_footer_area css=============*/
+
+/*=============== project_footer_area css=============*/
+.project_footer_area{
+    background: #F7FAFD;
+    padding-top: 230px;
+    .f_widget .f_title{
+        font-family: $pro;
+    }
+    .f_widget.about_widget{
+        padding-right: 20px;
+    }
+    .f_widget.link_widget ul li{
+        a{
+            &:before{
+                background: #f31f74;
+            }
+            &:hover{
+                color: #f31f74;
+            }
+        }
+    } 
+    .footer_bottom .coppyright_info .f_social a{
+        &:before{
+            background: #f31f74;
+        }
+    }
+}
+/*=============== project_footer_area css=============*/
+
+/*=============== payment_footer_area css=============*/
+.payment_footer_area{
+    background: #fafbfd;
+    position: relative;
+    a{
+        color: #8d949e;
+        &:hover{
+            color: #5e2ced;
+        }
+    }
+    .footer_top{
+        padding: 200px 0px 70px;
+        .f_widget{
+            .f_logo{
+                margin-bottom: 24px;
+            }
+            .f_title{
+                text-transform: uppercase;
+                color: #252a32;
+                font-family: $pop;
+                font-size: 18px;
+            }
+            &.about_widget{
+                padding-right: 0px;
+                p{
+                    font-size: 16px;
+                    line-height: 30px;
+                    color: #8d949e;
+                    font-family: $pop;
+                }
+                .f_social{
+                    a{
+                        width: 40px;
+                        height: 40px;
+                        line-height: 38px;
+                        border-radius: 50%;
+                        display: inline-block;
+                        text-align: center;
+                        margin-right: 8px;
+                        border: 1px solid #ededed;
+                        &:hover{
+                            border-color: #5e2ced;
+                        }
+                    }
+                }
+            }
+            &.link_widget{
+                padding-left: 40px;
+                ul{
+                    li{
+                        a{
+                            font-size: 16px;
+                            font-family: $pop;
+                            &:before{
+                                background: #5e2ced;
+                            }
+                            &:hover{
+                                color: #5e2ced;
+                            }
+                        }
+                    }
+                }
+            } 
+        } 
+    }
+    .footer_bottom{
+        border-top: 1px solid #f2f5fe;
+        p{
+            font-size: 14px;
+            line-height: 30px;
+            color: #8d949e;
+            font-family: $pop;
+            margin-bottom: 0;
+        }
+        .f_menu{
+            margin-bottom: 0;
+            li{
+                display: inline-block;
+                font-size: 14px;
+                font-family: $pop;
+                & + li{
+                    margin-left: 16px;
+                    &:before{
+                        content: "";
+                        width: 1px;
+                        height: 12px;
+                        background: #b1b7ca;
+                        display: inline-block;
+                        margin-right: 18px;
+                    }
+                }
+            }
+        }
+    }
+    .pt_120{
+        padding-top: 120px;
+    }
+}
+/*=============== payment_footer_area css=============*/
+.payment_footer_area_two{
+    .footer_top{
+        padding-top: 120px;
+        &.pt_250{
+            padding-top: 260px;
+        }
+        &.pt_190{
+            padding-top: 190px;
+        }
+        .f_widget{
+            &.link_widget ul li a,&.about_widget p{
+                font-family: $soc;
+                font-weight: 400;
+            }
+            &.link_widget ul li a{
+                &:before{
+                    background: #11bdff;
+                }                
+                &:hover{
+                    color: #11bdff;
+                }
+            }
+            .f_title{
+                font-family: $pro;
+                font-weight: 700;
+            }
+            &.about_widget .f_social a:hover{
+                color: #11bdff;
+                border-color: #11bdff;
+            }
+        } 
+    }
+    .footer_bottom {
+        p,.f_menu li{
+            font-family: $soc;
+            font-size: 16px;
+        }
+        a{
+            &:hover{
+                color: #11bdff;
+            }
+        }
+    }
+}
+
+/*=========== prototype footer area  =============*/
+.prototype_footer_area{
+    background: #413c85;
+    padding: 110px 0px 150px;
+    position: relative;
+    z-index: 1;
+    .animated-wave{
+        width: 100%;
+        position: absolute;
+        height: 212px;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+    }
+    .image_leaf{
+        position: absolute;
+        bottom: -20px;
+        left: -20px;
+        width: 400px;
+        &.two{
+            right: -20px;
+            left: auto
+        }
+    }
+    .f_widget{
+        font-family: $pop;
+        font-weight: 400;
+        color: #bab5df;
+        .f_title{
+            color: #fff;
+            font-family: $pop;
+            font-weight: 500;
+        }
+        p,a{
+            color: #bab5df;
+        }
+        &.link_widget ul li a{
+            color: #bab5df;
+            &:before{
+                display: none;
+            }
+            &:hover{
+                color: #fff;
+            }
+        }
+        .f_social{
+            a{
+                text-align: center;
+                line-height: 40px;
+                font-size: 18px;
+                display: inline-block;
+                margin-right: 20px;
+                &:hover{
+                    color: #fff;
+                }
+            }
+        }
+    } 
+}
+

@@ -1,0 +1,195 @@
+a{
+    text-decoration:none;
+    transition: all 0.3s ease-in-out;
+    &:hover, &:focus{
+       text-decoration:none;
+       outline: none;
+    }
+}
+.row.m0{
+    margin: 0px;
+}
+.p0{
+    padding: 0px;   
+}
+
+html {
+    height: 100%;
+    overflow-x: hidden;
+}
+body{
+    line-height: 28px;
+    font-size: 16px;
+    height: 100%;
+}
+:focus{
+    outline: none;
+}
+h1, h2, h3, h4, h5, h6{
+    font-weight: 700;
+}
+i{
+    &:before{
+        margin-left: 0px !important;
+    }
+}
+button:focus{
+    outline: none;
+}
+
+
+.container{
+    @media (min-width:1200px){
+        max-width: 1200px;
+    }
+}
+
+.text_upparcase{
+    text-transform: uppercase;
+}
+
+.body_wrapper{
+    overflow: hidden;
+}
+
+.saas_title{
+    margin-bottom: 60px;
+    h2{
+        font-family: $soc;
+        font-size: 38px;
+        font-weight: 300;
+        color: #051441;
+        span{
+            font-weight: 700;
+        }
+    }
+    .border_line{
+        width: 225px;
+        height: 1px;
+        background: #e9ecf2;
+        position: relative;
+        margin: 20px auto 25px;
+        .border_shape{
+            width: 50px;
+            height: 6px;
+            background-image: -moz-linear-gradient( 170deg, rgb(255,198,0) 0%, rgb(255,150,0) 100%);
+            background-image: -webkit-linear-gradient( 170deg, rgb(255,198,0) 0%, rgb(255,150,0) 100%);
+            background-image: -ms-linear-gradient( 170deg, rgb(255,198,0) 0%, rgb(255,150,0) 100%);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -2.5px;
+            &:before{
+                content: "";
+                border-top: 3px solid rgb(255,150,0);
+                border-bottom: 3px solid rgb(255,150,0);
+                border-right: 4px solid transparent;
+                border-left: 4px solid transparent;
+                position: absolute;
+                left: -4px;
+                top: 0;
+            }
+            &:after{
+                content: "";
+                border-top: 3px solid rgb(255,198,0);
+                border-bottom: 3px solid rgb(255,198,0);
+                border-right: 4px solid transparent;
+                border-left: 4px solid transparent;
+                position: absolute;
+                right: -4px;
+                top: 0;
+            }
+        }
+    }
+    p{
+        font-family: $soc;
+        font-size: 18px;
+        line-height: 28px;
+        color: #9398ab;
+        margin-bottom: 0px;
+    }
+}
+.saas_title_two{
+    margin-bottom: 70px;
+    h2{
+        font-size: 36px;
+        font-weight: 400;
+        font-family: $pop;
+        color: #282b31;
+        margin-bottom: 15px;
+        span{
+            font-weight: 600;
+        }
+    }
+    p{
+        font-family: $lato;
+        font-size: 18px;
+        line-height: 26px;
+        font-weight: 300;
+        color: #7f7d8e;
+        margin-bottom: 0;
+    }
+}
+.s_t_color{
+    color: #051441;
+}
+
+.sec_pad{
+    padding: 120px 0px;
+}
+
+.app_section_title{
+    margin-bottom: 75px;
+    h6{
+        font-size: 14px;
+        color: #3ecef8;
+        font-weight: 400;
+        font-family: $lato;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+    h2{
+        font-size: 30px;
+        font-weight: 700;
+        font-family: $pop;
+        color: #252a32;
+        text-transform: uppercase;
+        margin-bottom: 0px;
+    }
+}
+
+.pr_section_title{
+    margin-bottom: 74px;
+    h2{
+        font-size: 40px;
+        line-height: 50px;
+        font-weight: 700;
+        color: #19182e;
+        font-family: "Product";
+        margin-bottom: 12px;
+    }
+    p{
+        margin-bottom: 0px;
+    }
+}
+
+.prototype_title {
+    margin-bottom: 70px;
+    h2{
+        font-size: 40px;
+        line-height: 48px;
+        color: #263b5e;
+        margin-bottom: 15px;
+    }
+    h6{
+        text-transform: uppercase;
+        font-weight: 500;
+        color: #5e2ced;
+        font-family: $pop;
+        margin-bottom: 10px;
+        letter-spacing: 0.15em;
+    }
+}
+.mt_40{
+    margin-top: 40px;
+}
