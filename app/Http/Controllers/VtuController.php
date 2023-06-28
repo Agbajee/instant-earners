@@ -21,7 +21,6 @@ class VtuController extends Controller
     public function getDataBundles(Request $request)
     {
         $network = $request->input('network');
-        // $apiKey = 'FLWSECK-0b9c56c1b02314cef72396bb2b8738c2-X';
         $apiKey = 'FLWSECK_TEST-a110eae48cc102ad7d0e0624ef6badeb-X';
 
         $client = new Client([
@@ -85,7 +84,7 @@ class VtuController extends Controller
 
         $user = User::where('id', Auth::user()->id)->first();
 
-        // $apiKey = 'FLWSECK-0b9c56c1b02314cef72396bb2b8738c2-X'; // Get the API key from the .env file
+
         $apiKey = 'FLWSECK_TEST-a110eae48cc102ad7d0e0624ef6badeb-X'; // Get the API key from the .env file
         $endPoint = 'https://api.flutterwave.com/v3/bills';
 
