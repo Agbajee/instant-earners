@@ -203,6 +203,49 @@ $notification = \App\Models\siteNotifcation::firstOrFail();
     <script src="{{ asset ('newUser/js/pages/dashboard.js')}}"></script>
     @yield('js')
     @include('partials.notify')
+    
+    <script>
+        @php
+            $country = \App\Models\Country::where('country_name', $user->country)->select('country_code')->first();
+        @endphp
+        // Assuming you have a user object from your database
+        let user = {
+            id: 1,
+            name: "{!! Auth::user()->username !!}",
+            country: "{{ $country->country_code }}"
+        };
+        console.log(user.country);
+
+        // Mapping of country codes to currency codes
+        let countryToCurrencyMap = {
+            'US': 'USD',
+            'UK': 'GBP',
+            'KE': 'KES',  // Kenya
+            'GH': 'GHS',  // Ghana
+            'CM': 'XAF',  // Cameroon
+            'NG': 'NGN',  // Nigeria
+        };
+
+        // Function to get exchange rate from API
+        async function getExchangeRate(baseCurrency, targetCurrency) {
+            let response = await fetch(`https://api.exchangeratesapi.io/latest?base=${baseCurrency}`);
+            let data = await response.json();
+            return data.rates[targetCurrency];
+        }
+
+        // Function to convert amount from one currency to another
+        async function convertAmount(amount, fromCurrency, toCurrency) {
+            let exchangeRate = await getExchangeRate(fromCurrency, toCurrency);
+            return amount * exchangeRate;
+        }
+
+        // Example usage
+        let userCurrency = countryToCurrencyMap[user.country];
+        let amountInUSD = 100; // Amount to convert
+        convertAmount(amountInUSD, 'USD', userCurrency)
+            .then(amountInUserCurrency => console.log(`The amount in user's currency is: ${amountInUserCurrency}`))
+            .catch(error => console.error(error));
+    </script>
 </body>
 
 </html>

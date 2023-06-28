@@ -43,6 +43,7 @@ Route::get('/', [AuthController::class, 'home'])->name('home');
 Route::get('/site-statistics', [AuthController::class, 'siteStatistics'])->name('siteStatistics');
 Route::get('/coupon-checker', [AuthController::class, 'checkCoupon'])->name('checkCoupon');
 Route::get('/share/{slug}', [TreadController::class, 'shareSponsoredPost'])->name('shareSponsoredPost');
+Route::get('/share-ad/{slug}', [TreadController::class, 'shareAdvert'])->name('shareAdvert');
 
 Route::post('/coupon-checker', [AuthController::class, 'couponCheckerPost'])->name('couponCheckerPost');
 
@@ -51,6 +52,7 @@ Route::get('/how-it-works', [AuthController::class, 'howItWorks'])->name('howItW
 Route::get('/todays-payout', [AuthController::class, 'todaysPayout'])->name('todaysPayout');
 
 Route::get('/news', [AuthController::class, 'news'])->name('news');
+Route::get('/adverts', [AuthController::class, 'ads'])->name('ads');
 
 Route::get('/terms', [AuthController::class, 'terms'])->name('terms');
 Route::get('/howRegister', [AuthController::class, 'howRegister'])->name('howRegister');
@@ -262,6 +264,13 @@ Route::middleware('auth', 'admin')->group(function() {
     Route::get('/admin/treads/selected/{id}',[AdminController::class, 'adminTreadsSelected'])->name('adminTreadsSelected');
     Route::post('/admin/treads/selected/treads',[AdminController::class, 'adminTSelected'])->name('adminTSelected');
 
+    Route::get('/admin/adverts',[AdminController::class, 'allAdverts'])->name('allAdverts'); 
+    Route::get('/admin/advert/create',[AdminController::class, 'advertCreate'])->name('advertCreate'); 
+    Route::post('/admin/create/advert',[AdminController::class, 'advertCreatePost'])->name('advertCreatePost');
+    Route::get('/admin/advert/edit/{id}',[AdminController::class, 'advertEdit'])->name('advertEdit');
+    Route::post('/admin/edit/advert/{id}',[AdminController::class, 'advertEditPost'])->name('advertEditPost');
+    Route::get('/admin/advert/delete/{id}',[AdminController::class, 'advertDelete'])->name('advertDelete');
+
     Route::post('/admin/treads/selected/treads/draft',[AdminController::class, 'adminTSelectedDraft'])->name('adminTSelectedDraft');
     Route::post('/admin/treads/edit/{id}/action/{action}',[AdminController::class, 'adminTreadsIDPostActions'])->name('adminTreadsIDPostActions');
 
@@ -431,6 +440,9 @@ Route::get('/category/{id}',[TreadController::class, 'cat'])->name('cat');
 
 Route::get('tread/{id}',[TreadController::class, 'treadID'])->name('treadID');
 Route::get('post/{slug}',[TreadController::class, 'tread'])->name('tread');
+
+Route::get('ads/{id}',[TreadController::class, 'AdsID'])->name('AdsID');
+Route::get('advert-details/{slug}',[TreadController::class, 'AdsE'])->name('advert.post');
 
 // Auth::routes();
 // Auth::routes(['verify' => true]);

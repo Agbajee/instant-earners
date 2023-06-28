@@ -22,7 +22,6 @@ class ResendActivation extends Mailable
         $this->user = $user;
     }
 
-
     /**
      * Build the message.
      *
@@ -32,7 +31,7 @@ class ResendActivation extends Mailable
     {
         return $this
         ->subject(config('app.name'). ' - New Email For you.')
-        ->from('support@instantnaire.com')
+        ->from('no-reply@instantnaire.com')
         ->markdown('Email.resend_verification')
         ->with('data', $this->user);
 

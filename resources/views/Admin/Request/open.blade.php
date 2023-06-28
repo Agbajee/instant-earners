@@ -49,7 +49,18 @@
                             data-onstyle="primary" data-offstyle="dark">
                             <label class="form-check-label" for="activity">Activity</label>
                         </div>
-                {{-- 
+
+                        <div class="form-check form-switch">
+                            <input name="allowi" value="1"
+                            type="checkbox" id="activity" 
+                            data-toggle="switchbutton" 
+                            @if ($the_payout->salary) checked @endif 
+                            data-offlabel="<i class='bx bx-power-off'></i> OFF" 
+                            data-onlabel="<i class='bx bx-power-off'></i> ON" 
+                            data-onstyle="primary" data-offstyle="dark">
+                            <label class="form-check-label" for="activity">Salary</label>
+                        </div>
+{{-- 
                         <div class="form-group mt-3">
                             <label>Lucky Wheel Price Pool</label>
                             <input type="number" class="form-control" style="height: 50px" value="{{$the_payout->pool_price}}" name="pool_price" min="0" placeholder="amount to win from spin">

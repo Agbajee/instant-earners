@@ -98,6 +98,24 @@
 
 									<li class="dropdown-submenu">
 										<a class="nav-link">
+											Advert Post
+										</a>
+										<ul class="dropdown-menu">
+											<li>
+												<a class="nav-link" href="{{route('allAdverts')}}">
+													Posts
+												</a>
+											</li>
+											<li>
+												<a class="nav-link" href="{{route('advertCreate')}}">
+													Create Post
+												</a>
+											</li>
+										</ul>
+									</li>
+
+									<li class="dropdown-submenu">
+										<a class="nav-link">
 											Loans
 										</a>
 										<ul class="dropdown-menu">
@@ -373,6 +391,26 @@
 									</li>
 								</ul>
 							</li>
+
+							<li class="nav-parent">
+								<a class="nav-link" href="javascript:void(0)">
+									<i class="bx bx-file" aria-hidden="true"></i>
+									<span>Advert Posts</span>
+								</a>
+								<ul class="nav nav-children">
+									<li class="">
+										<a class="nav-link" href="{{route('allAdverts')}}">
+											Posts
+										</a>
+									</li>
+									<li>
+										<a class="nav-link" href="{{route('advertCreate')}}">
+											Create Post
+										</a>
+									</li>
+								</ul>
+							</li>
+							
 							<li class="nav-parent ">
 								<a class="nav-link" href="javascript:void(0)">
 									<i class="bx bx-help-circle" aria-hidden="true"></i>

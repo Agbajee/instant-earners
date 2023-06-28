@@ -16,21 +16,13 @@
                             <p class="pb-25">
                                 {!!  $tread->content ? $tread->content : '' !!} 
                             </p>
-                            <div class="fs-6">date: {{$tread->created_at->format('g:ia M j')}}</div> 
+                            <div class="fs-6">date: {{ date_to_word($tread->created_at) }}</div> 
 
                             <div class="mt-40">
-                                <h6>Share post on:</h6>
                                 @auth
-                                    @if ($tread->created_at->format('Y-m-d') == date('Y-m-d'))
-                                        <a class="readon know px-2 py-2 rounded" href="https://www.tiktok.com/@instantnaire?_t=8bvuEdS0TsU&_r=1" target="_blank">
-                                            <i class='bx bxl-tiktok' style='color:#2a1313'></i>
-                                        </a>
-                                        <a class="readon know px-2 py-2 rounded" href="{{ url('/share') }}/{{ $tread->slug }}" target="_blank">
-                                            <i class='bx bxl-facebook-circle'></i>
-                                        </a>
-                                    @else
-                                        <div class="alert alert-warning">you can no longer earn from this post!</div>
-                                    @endif
+                                    <a class="readon know px-2 py-2 rounded" href="{{ url('/share-ad') }}/{{ $tread->slug }}" target="_blank">
+                                        Perform Task
+                                    </a>
                                 @else
                                     <a href="{{route('signin')}}">You are not logged in!</a>
                                 @endauth
@@ -58,7 +50,7 @@
                                 <a href="{{route('tread', $item->slug)}}"><img src="{{ asset('/images/treads/'.$item->featured_image ? : '') }}" alt=""></a>
                             </div>
                             <div class="post-desc">
-                                <span class="date-post"><i class="ri-calendar-line"></i>{{$item->created_at->format('g:ia M j')}}</span>
+                                <span class="date-post"><i class="ri-calendar-line"></i>{{ date_to_word($item->created_at) }}</span>
                                 <a href="{{route('tread', $item->slug)}}"> {{$item->title}}</a>
                             </div>
                         </div>

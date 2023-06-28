@@ -2,29 +2,34 @@
 
 namespace App\Http\Controllers;
 // email
-use App\Mail\Activation;
-use App\Models\Subscriber;
-use Illuminate\Http\JsonResponse;
-// email
 use Carbon\Carbon;
-
-use App\Models\payoutRequest;
-use App\Models\User;
 use App\Models\Plan;
-use App\Models\GeneralSettings;
+use App\Models\User;
+// email
+use App\Mail\Activation;
+
+use App\Models\Subscriber;
+use App\Models\payoutRequest;
 use App\Models\requestPayout;
+use App\Models\GeneralSettings;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class CronController extends Controller
 {
     public function cron()
     {
         // daily reset
-        $today = Carbon::today();
-        $user = User::where('last_login_at', '<=', $today );
+        // $today = Carbon::today();
+        // $user = User::where('last_login_at', '<=', $today );
+        $user = User::query();
         $user->update([
-             'no_of_login' => 0,
-             'daily_task' => 0,
+            'no_of_login' => 0,
+            'daily_task' => 0,
+            'no_of_sponsored' => 0,
         ]);
+
+        // return dd($user->count());
 
         // Auto Withdrawal
         $gnl = GeneralSettings::first();
@@ -38,39 +43,46 @@ class CronController extends Controller
             // Let's process the payment
             $gnl->last_payment = Carbon::now()->toDateString();
             $gnl->save();
-
-            $eligibleUsers = User::where('allowi_balance', '>=', 20000)
+    
+            $eligibleUsers = User::where('allowi_balance', '>=', 25000)
             ->where('acc_numb', '!=', '')
             ->where('bank', '!=', '')
             ->where('w_auto', '1')
             ->get();
-
+    
             foreach ($eligibleUsers as $uex) {
-                
-                $user = User::find($uex->id);
-                $plan = Plan::where('id', $user->plan)->first();
-
-                $point = $user->w_limit;
-
-                // deduct balance from User
-                $uex->allowi_balance -= $point;
-                $uex->save();
-
-                payoutRequest::updateOrCreate([
-                    'is_payed' => 0,
-                    'from_account' => 2,
-                    'name' => $user->fullname,
-                    'amount' => $point,
-                    'account_number' => $user->acc_numb,
-                    'bank_name' => $user->bank,
-                    'user_id' => $user->id,
-                ]);
-
+                // Start the transaction
+                DB::transaction(function () use ($uex) {
+                    $user = User::find($uex->id);
+            
+                    // Check for an existing unpaid payoutRequest for this user
+                    $existingRequest = payoutRequest::where('user_id', $user->id)->where('is_payed', 0)->first();
+                    if ($existingRequest) {
+                        // An unpaid request exists, so skip this iteration
+                        return;
+                    }
+            
+                    $point = $user->w_limit;
+            
+                    // deduct balance from User
+                    $uex->allowi_balance -= $point;
+                    $uex->save();
+            
+                    payoutRequest::create([
+                        'from_account' => 2,
+                        'name' => $user->fullname,
+                        'amount' => $point,
+                        'account_number' => $user->acc_numb,
+                        'bank_name' => $user->bank,
+                        'user_id' => $user->id,
+                        'is_payed' => 0
+                    ]);
+                });
             }
+            
             return count($eligibleUsers);
         }else{
             return "Activity is not available";
-            // return Carbon::parse($gnl->last_payment)->toDateString();
         }
     }
 }

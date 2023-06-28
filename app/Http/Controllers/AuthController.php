@@ -8,14 +8,17 @@ use App\Models\User;
 
 use App\Testimonial;
 use App\Mail\Referral;
+use App\Models\Advert;
 use App\Models\Market;
 use App\Models\Vendor;
+use App\Models\Influencer;
 use App\Mail\ResetPassword;
 use App\Models\CouponCodes;
 use Illuminate\Support\Str;
+
 use Illuminate\Http\Request;
 use App\Models\ActivityBonus;
-
+use App\Models\payoutRequest;
 use App\Models\EarningHistory;
 use App\Models\MarketCategory;
 use App\Models\PasswordResetM;
@@ -27,9 +30,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Artesaos\SEOTools\Facades\SEOMeta;
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-
 use Illuminate\Support\Facades\Validator;
 use Artesaos\SEOTools\Traits\SEOTools as SEOToolsTrait;
 
@@ -106,6 +109,23 @@ class AuthController extends Controller
         return view('news', compact('gt', 'pageTitle', 'pageSubtitle'));
     }
 
+    public function Ads(){
+        $data['pageTitle'] = 'All Adverts';
+        $data['pageSubtitle'] ='Advert Post';
+        $data['gists'] = Advert::where('status', 1)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(4);
+        $data['gt'] = GeneralSettings::first();
+        SEOMeta::addKeyword( $data['gt']->keywords ? $data['gt']->keywords : '' );
+        $this->seo()->setTitle($data['gt']->title);
+        $this->seo()->setDescription( $data['gt']->description ? $data['gt']->description : '' );
+        $this->seo()->opengraph()->setUrl(Url::current());
+        $this->seo()->opengraph()->addProperty('type', 'articles');
+        $this->seo()->opengraph()->addImage(asset('images/general/'.$data['gt']->socialIcon), ['height' => 300, 'width' => 300]);
+
+        return view('ads', $data);
+    }
+
 
     public function activationCode(){
         $pageTitle = 'Get Code';
@@ -128,7 +148,21 @@ class AuthController extends Controller
         SEOMeta::addKeyword( $gt->keywords ? $gt->keywords : '' );
         $this->seo()->setTitle('Top earners and site statistic- '.$gt->title);
         $this->seo()->setDescription( $gt->description ? $gt->description : '' );
-        $earners = User::select('id','avatar', 'username', 'balance', 'total_balance', DB::raw('balance + total_balance as total'))->where('id', '!=', 1)->orderBy('total', 'DESC')->take(10)->get();
+        // $earners =  User::select('id','avatar', 'username', 'balance', 'total_balance',  DB::raw('balance + total_balance as total'))
+        //     ->where('id', '!=', 1)->orderBy('total', 'DESC')
+        //     ->take(10)
+        //     ->get();
+
+        $earners = DB::table('users')
+            ->leftJoin('payout_requests', function($join) {
+                $join->on('users.id', '=', 'payout_requests.user_id')
+                     ->where('payout_requests.is_payed', '!=', payoutRequest::REJECTED);
+            })
+            ->select('users.id', 'users.username', 'users.balance','users.avatar', DB::raw('SUM(payout_requests.amount) as total_payouts'))
+            ->groupBy('users.id', 'users.username', 'users.balance','users.avatar')
+            ->orderByRaw('(users.balance + IFNULL(SUM(payout_requests.amount), 0)) desc')
+            ->take(20)
+            ->get();
         return view('statistic', compact('gt', 'pageTitle', 'pageSubtitle', 'earners'));
     }
 
@@ -472,6 +506,7 @@ class AuthController extends Controller
             'fullname' => 'required|max:120|string',
             'password' => 'required|max:120|min:6',
             'number' => 'required|max:120|min:6',
+            'country' => 'required',
             'email' => 'required|max:120|email|unique:users',
             'coupon' => 'required'
         ]);
@@ -504,6 +539,7 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'number' => $request->number,
+            'country' => $request->country,
             'password' => Hash::make($request->password),
             'referred_by_id' => $the_referral->id,
             'referral_id' => $request->username . '-' . Str::upper(Str::random('5')),
@@ -529,6 +565,18 @@ class AuthController extends Controller
                 // $parent->indirect_ref += $the_plan->referral_bonus;
                 $parent->balance += $the_plan->referral_bonus;
                 $parent->save();
+
+                if($parent->influencer){
+                    $influencer = Influencer::where('user_id', $parent->id)->first();
+                    $influencer->salary += 300;
+                    $influencer->save();
+
+                    $earning = new EarningHistory();
+                    $earning->user_id = $parent->id;
+                    $earning->amount = 300;
+                    $earning->type = 'Salary earned';
+                    $earning->save();
+                }
 
                 //Earning History
                 $earning = new EarningHistory();

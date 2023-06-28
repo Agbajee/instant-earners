@@ -42,6 +42,11 @@
                                     <label class="bmd-label-floating">Share Post Bonus</label>
                                     <input class="form-control" name="post_bonus" required>
                                 </div>
+
+                                <div class=" col-md-6 my-3">
+                                    <label class="bmd-label-floating">Share Advert Bonus</label>
+                                    <input class="form-control" name="advert_bonus" required>
+                                </div>
                                 
                                 <div class=" col-md-6 my-3">
                                     <label class="bmd-label-floating">Daily Login Bonus</label>

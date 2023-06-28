@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\EarningHistory;
 use App\Models\GeneralSettings;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 use Artesaos\SEOTools\Traits\SEOTools as SEOToolsTrait;
 
 
@@ -80,6 +83,7 @@ class VtuController extends Controller
         // Deduct the cost of the data from the user's earnings
         // (Implement your logic here)
 
+        $user = User::where('id', Auth::user()->id)->first();
 
         // $apiKey = 'FLWSECK-0b9c56c1b02314cef72396bb2b8738c2-X'; // Get the API key from the .env file
         $apiKey = 'FLWSECK_TEST-a110eae48cc102ad7d0e0624ef6badeb-X'; // Get the API key from the .env file
@@ -87,8 +91,14 @@ class VtuController extends Controller
 
         $type = $bundleType === 'airtime' ? 'AIRTIME' : $dataPlan;
         $purchaseAmount = $bundleType === 'airtime' ? $airtimeAmount : $amount;
-        Log::info('Type:', ['value' => $type]);
         Log::info('Request data:', $request->all());
+
+        $deductValue = $purchaseAmount*10;
+        if($user->allowi_balance < $deductValue ){
+
+            $result = 'You need ' .$deductValue.  ' points to purchase this package!';
+            return response()->json(['message' => 'Insufficient Funds! '.$result], 400);
+        }
 
         try {
             $ch = curl_init();
@@ -108,6 +118,8 @@ class VtuController extends Controller
                 'Authorization: Bearer ' . $apiKey
             ]);
 
+            dd($purchaseAmount);
+
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -116,7 +128,15 @@ class VtuController extends Controller
             if ($httpCode == 200) {
                 $result = json_decode($response, true);
                 // Update the user interface and database
-                // (Implement your logic here)
+                $user->allowi_balance-$deductValue;
+                $user->save();
+
+                $earning = new EarningHistory();
+                $earning->user_id = $user->id;
+                $earning->amount = $deductValue;
+                $earning->type = 'Purchased ' .$purchaseAmount. ' '. $bundleType;
+                $earning->save();
+
                 return response()->json(['message' => 'Purchase successful', 'data' => $result], 200);
             } else {
                 $result = json_decode($response, true);

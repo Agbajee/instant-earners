@@ -42,6 +42,11 @@
                             </div>
 
                             <div class=" col-md-6 my-3">
+                                <label class="bmd-label-floating">Advert Post Bonus</label>
+                                <input class="form-control" name="advert_bonus" value="{{ $data->advert }}">
+                            </div>
+
+                            <div class=" col-md-6 my-3">
                                 <label class="bmd-label-floating">Daily Login Bonus</label>
                                 <input class="form-control" name="login_bonus" value="{{ $data->login }}">
                             </div>

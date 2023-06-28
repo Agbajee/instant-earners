@@ -13,6 +13,20 @@
 						@foreach ($earners as $row)
 							<div class="col-md-6">
 								<div class="custom-list">
+									<img class="list-avatar" src="{{ asset('images/users/' . $row->avatar) }}" alt="">
+									<div>
+										<div class="list-title">{{ $row->username }}</div>
+										<div class="list-desc">
+											₦{{ number_format($row->balance + $row->total_payouts, 2) }}
+										</div>
+									</div>
+									<div class="lottie-badge"></div>
+								</div>
+							</div>
+						@endforeach
+						{{-- @foreach ($earners as $row)
+							<div class="col-md-6">
+								<div class="custom-list">
 									<img class="list-avatar" src="{{ asset('images/users/' . $row->avatar) }}"
 										alt="">
 									<div>
@@ -24,7 +38,7 @@
 									<div class="lottie-badge"></div>
 								</div>
 							</div>
-						@endforeach
+						@endforeach --}}
 					</div>
 				</div>
 			</div>

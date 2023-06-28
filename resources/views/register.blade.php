@@ -3,19 +3,22 @@
 @endphp
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>{{ $gt->title }}</title>
-    <meta name="keywords" content="{{ $gt->keywords }}" />
-    <meta name="description" content="{{ $gt->description }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="shortcut icon" href="{{ asset('images/general/' . $gt->favicon) }}">
-
-    <!-- Vendors Style-->
-    <link rel="stylesheet" href="{{ asset('newUser/css/vendors_css.css') }}">
-    <!-- Style-->
-    <link rel="stylesheet" href="{{ asset('newUser/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('newUser/css/custom.css') }}">
-</head>
+	<head>
+		<title>{{ $gt->title }}</title>
+		<meta name="keywords" content="{{ $gt->keywords }}" />
+		<meta name="description" content="{{ $gt->description }}">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="shortcut icon" href="{{ asset('images/general/' . $gt->favicon) }}">
+		<!-- Vendors Style-->
+		<link rel="stylesheet" href="{{ asset('newUser/css/vendors_css.css') }}">
+		<!-- Style-->
+		<link rel="stylesheet" href="{{ asset('newUser/css/style.css') }}">
+		<!-- Select2 CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+		<!-- Custom Style-->
+		<link rel="stylesheet" href="{{ asset('newUser/css/custom.css') }}">
+	</head>
+	
 
 <body class="hold-transition theme-primary">
 
@@ -55,10 +58,21 @@
 										<button type="button" id="toggle-password" class="btn-custom"><i class="fa fa-eye-slash"></i></button>
 								</div>
 								<div class="form-group">
-
 									<input type="tel" class="form-primary ps-15 bg-transparent"
 										placeholder="Phone" value="{{ old('number') }}" name="number"
 										autocomplete="off" required>
+								</div>
+
+								<div class="form-group">
+									<select class="form-primary ps-15 bg-transparent select2-enable" name="country">
+										<option selected>Select Country</option>
+										@php $countries = \App\Models\Country::get(); @endphp
+										@foreach ($countries as $country)
+											<option value="{{ $country->id }}">
+												{{ $country->country_name }}
+											</option>
+										@endforeach
+									</select>
 								</div>
 
 								<div class="form-group">
@@ -120,6 +134,7 @@
     <script src="{{ asset('newUser/js/vendors.min.js') }}"></script>
     <script src="{{ asset('newUser/js/pages/chat-popup.js') }}"></script>
     <script src="{{ asset('newUser/assets/icons/feather-icons/feather.min.js') }}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script>
         $("#toggle-password").click(function(e) {
             e.preventDefault();
@@ -132,6 +147,10 @@
                 $('.fa-eye').toggleClass('fa-eye fa-eye-slash');
             }
         });
+
+		$(document).ready(function() {
+			$('.select2-enable').select2();
+		});
     </script>
 
     @include('partials.notify')

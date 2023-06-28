@@ -16,24 +16,374 @@
             ->first();
         
         $activityBalance = $user->allowi_balance;
-        $mainBalance = $user->balance + $user->indirect_ref;
-        
+        $mainBalance = $user->balance;
+
+        $country = \App\Models\Country::where('country_name', $user->country)->select('country_flag')->first();
+
+        $notification = App\Models\siteNotifcation::latest()->first();
     @endphp
 
     <style>
-    .balance-card .extra-details{
-        width: 85%;
-        padding: 0 0 12px 0;
-        background: transparent;
-        position: absolute;
-        border-bottom: 2px solid #F1602B;
-        top: 28px;
-        left: 20px;
-        display: flex;
-        gap:30px;
+        .balance-card .extra-details{
+            width: 85%;
+            padding: 0 0 12px 0;
+            background: transparent;
+            position: absolute;
+            border-bottom: 2px solid #F1602B;
+            top: 28px;
+            left: 20px;
+            display: flex;
+            gap:30px;
         }
-    .balance-card .extra-details span{
+        .balance-card .extra-details span{
+                font-size: 12px;
+        }
+        /* Advert Stylings */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+        :root {
+            --glow-color: #49ff49;
+            --colorShadeA: #ff8c00;
+            --colorShadeB: #49ff49;
+            --colorShadeC: #00a800;
+            --colorShadeD: #055630;
+            --colorShadeE: rgb(0, 64, 34);
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .adds {
+            font-family: 'Montserrat', sans-serif;
+            /* background: #212529; */
+            padding: 20px 10px;
+            height: 100%;
+        }
+        .adds .title{
+            border: 4px solid #015b01;
+            background-color: #35ff350c;
+            border-radius: 5px;
+            text-align:center ;
+            padding: 10px;
+        }
+        .first-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .d-link{
+            text-decoration: none;
+            color: #fff;
+            background-color: #006be5;
+            border-radius: 5px;
+            padding: 10px 10px;
+            font-weight: 600;
+            margin: 20px 0;
+            display: block;
+            text-align: center;
+        }
+
+        p,h3 {
+            color: white;
+        }
+
+        ._text {
+            line-height: 35px;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        .pill-container{
+            width: 100%;
+            padding: 40px 10px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .__pill {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            outline: none;
+            border: 0;
+            vertical-align: middle;
+            text-decoration: none;
             font-size: 12px;
+            color: var(--colorShadeA);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-family: inherit;
+        }
+
+        .__pill.big-button {
+            padding: 1em 2em;
+            border: 2px solid var(--colorShadeA);
+            border-radius: 1em;
+            background: var(--colorShadeE);
+            transform-style: preserve-3d;
+            transition: all 175ms cubic-bezier(0, 0, 1, 1);
+        }
+        .__pill.big-button::before {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--colorShadeC);
+            border-radius: inherit;
+            box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.75em 0 0 var(--colorShadeA);
+            transform: translate3d(0, 0.75em, -1em);
+            transition: all 175ms cubic-bezier(0, 0, 1, 1);
+        }
+
+        .__pill.big-button:hover {
+            background: var(--colorShadeD);
+            transform: translate(0, 0.375em);
+        }
+
+        .__pill.big-button:hover::before {
+            transform: translate3d(0, 0.75em, -1em);
+        }
+
+        .__pill.big-button:active {
+            transform: translate(0em, 0.75em);
+        }
+
+        .__pill.big-button:active::before {
+            transform: translate3d(0, 0, -1em);
+            box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.25em 0 0 var(--colorShadeB);
+        }
+
+
+        /* CSS */
+        .cta {
+            margin: 40px 0;
+            width: 100%;
+            display: flex;
+            gap: 120px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .glowing-btn {
+            position: relative;
+            color: var(--glow-color);
+            cursor: pointer;
+            padding: 0.35em 1em;
+            border: 0.15em solid var(--glow-color);
+            border-radius: 0.45em;
+            background: none;
+            perspective: 2em;
+            font-family: "Raleway", sans-serif;
+            font-size: 2em;
+            font-weight: 900;
+            letter-spacing: 1em;
+
+            -webkit-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+                0px 0px 0.5em 0px var(--glow-color);
+            -moz-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+                0px 0px 0.5em 0px var(--glow-color);
+            box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+                0px 0px 0.5em 0px var(--glow-color);
+            animation: border-flicker 2s linear infinite;
+        }
+
+        .glowing-txt {
+            float: left;
+            margin-right: -0.8em;
+            -webkit-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+                0 0 0.45em var(--glow-color);
+            -moz-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+                0 0 0.45em var(--glow-color);
+            text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em var(--glow-color);
+            animation: text-flicker 3s linear infinite;
+        }
+
+        .faulty-letter {
+            opacity: 0.5;
+            animation: faulty-flicker 2s linear infinite;
+        }
+
+        .glowing-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            opacity: 0.7;
+            filter: blur(1em);
+            transform: translateY(120%) rotateX(95deg) scale(1, 0.35);
+            background: var(--glow-color);
+            pointer-events: none;
+        }
+
+        .glowing-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            z-index: -1;
+            background-color: var(--glow-color);
+            box-shadow: 0 0 2em 0.2em var(--glow-color);
+            transition: opacity 100ms linear;
+        }
+
+        .glowing-btn:hover {
+            color: rgba(0, 0, 0, 0.8);
+            text-shadow: none;
+            animation: none;
+        }
+
+        .glowing-btn:hover .glowing-txt {
+            animation: none;
+        }
+
+        .glowing-btn:hover .faulty-letter {
+            animation: none;
+            text-shadow: none;
+            opacity: 1;
+        }
+
+        .glowing-btn:hover:before {
+            filter: blur(1.5em);
+            opacity: 1;
+        }
+
+        .glowing-btn:hover:after {
+            opacity: 1;
+        }
+
+        @keyframes faulty-flicker {
+            0% {
+                opacity: 0.1;
+            }
+
+            2% {
+                opacity: 0.1;
+            }
+
+            4% {
+                opacity: 0.5;
+            }
+
+            19% {
+                opacity: 0.5;
+            }
+
+            21% {
+                opacity: 0.1;
+            }
+
+            23% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 0.5;
+            }
+
+            83% {
+                opacity: 0.4;
+            }
+
+            87% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes text-flicker {
+            0% {
+                opacity: 0.1;
+            }
+
+            2% {
+                opacity: 1;
+            }
+
+            8% {
+                opacity: 0.1;
+            }
+
+            9% {
+                opacity: 1;
+            }
+
+            12% {
+                opacity: 0.1;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            25% {
+                opacity: 0.3;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            70% {
+                opacity: 0.7;
+            }
+
+            72% {
+                opacity: 0.2;
+            }
+
+            77% {
+                opacity: 0.9;
+            }
+
+            100% {
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes border-flicker {
+            0% {
+                opacity: 0.1;
+            }
+
+            2% {
+                opacity: 1;
+            }
+
+            4% {
+                opacity: 0.1;
+            }
+
+            8% {
+                opacity: 1;
+            }
+
+            70% {
+                opacity: 0.7;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .glowing-btn {
+                font-size: 1em;
+            }
         }
     </style>
 
@@ -44,20 +394,21 @@
             <!-- Main content -->
             <section class="content">
                 <div class="row">
-                    <div class="col-12 d-flex align-items-end mb-40 ps-30" style="z-index:1;">
+                    <div class="col-12 d-flex align-items-center mb-40 ps-30" style="z-index:1;">
                         <a href="{{route('editAccount')}}">
                             <img src="{{ asset('images/users/' . $user->avatar) }}" alt="profile image" class="profile-pic">
                         </a>
                         <div class="greeting">
-                            <div>Welcome Back!</div>
+                            <div id="greeting"></div>
                             <div class="fs-22 fw-bold">{{ $user->fullname }}</div>
+                            <img src="{!! $country->country_flag !!}" alt="flag" width="25px">
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="balance-wrapper" style="z-index:1;">
                             <div class="balance-card front">
                                 <div class="extra-details">
-                                    <span>Affiliate: ₦ {!! number_format($user->balance )!!}</span> 
+                                    <span>Affiliate: ₦ {!! max(0 ,number_format($user->balance - $user->indirect_ref ))!!}</span> 
                                     <span>Indirect: ₦ {!! number_format($user->indirect_ref )!!}</span> 
                                 </div>
                                 <p class="fs-16">Affiliate Balance</p>
@@ -177,6 +528,19 @@
         </div>
     </div>
 
+    <div class="modal fade" id="notification" tabindex="-1" role="dialog" aria-labelledby="notification" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-fullscreen" role="document">
+            <div class="modal-content" style="background: #212529">
+                <div class="modal-body p-0">
+                    {!! $notification->content!!}
+                </div>
+                {{-- <div class="modal-footer">
+                    <button type="button" class="btn-custom" data-bs-dismiss="modal">okay</button>
+                </div> --}}
+            </div>
+        </div>
+    </div>
+
     <div id="random-popup" class="random-pop">
         <a id="update-balance-link" href="javascript:void(0);">
             <img src="{{ asset('newUser/images/gift.png')}}" width="200">
@@ -204,6 +568,23 @@
 @section('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        $(window).on('load', function() {
+            const greetingElem = document.querySelector('#greeting');
+
+            // determine the time of day
+            const now = new Date();
+            const hours = now.getHours();
+
+            // set the greeting based on the time of day
+            if (hours < 12) {
+                greetingElem.textContent = 'Good Morning 🌆';
+            } else if (hours < 18) {
+                greetingElem.textContent = 'Good Afternoon 🌇';
+            } else {
+                greetingElem.textContent = 'Good Evening 🌃';
+            }
+        });
+
         $(window).on('load', function() {
             $('#autoNotification').modal('show');
 
@@ -300,5 +681,10 @@
             });
         });
 
+        @if ($notification->status)
+            $(document).ready(function() {
+                $('#notification').modal('show');
+            });
+        @endif
     </script>
 @endsection

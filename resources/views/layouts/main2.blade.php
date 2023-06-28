@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('sasco/assets/css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('sasco/assets/css/remixicon.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('sasco/assets/fonts/flaticon.css')}}">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
     <link rel="stylesheet" type="text/css" href="{{ asset('sasco/assets/css/animate.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('sasco/assets/css/slick.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('sasco/assets/css/off-canvas.css')}}">
@@ -157,6 +158,9 @@
                         </li>
                         <li class="menu-item">
                             <a href="{{route('news')}}">Sponsored Task</a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{route('ads')}}">Advert Task</a>
                         </li>
                         <li class="menu-item">
                             <a href="{{route('contact')}}">Contact</a>

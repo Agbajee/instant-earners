@@ -39,6 +39,7 @@
                             <th>Indirect Referral Bonus</th>
                             <th>Registration Bonus</th>
                             <th>Sponsored Post Bonus</th>
+                            <th>Advert Post Bonus</th>
                             <th>Daily Login Bonus</th>
                             <th>Minimum Non Ref</th>
                             <th>Minimum Ref</th>
@@ -80,13 +81,17 @@
                                     </td>
 
                                     <td>
+                                        ₦ {{number_format($ui->advert, 2)}}
+                                    </td>
+
+                                    <td>
                                         ₦ {{number_format($ui->login, 2)}}
                                     </td>
                                     <td>
-                                        ₦ {{number_format($ui->min_ref, 2)}}
+                                        ₦ {{number_format($ui->min_noref, 2)}}
                                     </td>
                                     <td>
-                                        ₦ {{number_format($ui->min_noref, 2)}}
+                                        ₦ {{number_format($ui->min_ref, 2)}}
                                     </td>
 
                                 </tr>

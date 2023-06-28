@@ -5,9 +5,6 @@
     $the_verified = \App\Models\User::where('is_verified', 1)->get();
     $the_unverified = \App\Models\User::where('is_verified', 0)->get();
     $the_block = \App\Models\User::where('is_block', 1)->get();
-    $the_paid = \App\Models\PaidMembers::all();
-    $paid_members = \App\Models\PaidMembers::pluck('user_id');
-    $dd = \App\Models\User::whereIn('id', $paid_members)->orderBy('created_at', 'DESC')->paginate(30);
     $counter = 1;
 @endphp
 <div class="container-fluid">

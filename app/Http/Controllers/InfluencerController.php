@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Influencer;
+use Illuminate\Http\Request;
+use App\Models\requestPayout;
 use App\Models\GeneralSettings;
 use App\Models\InfluencerSalary;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response as FacadeResponse;
 
@@ -28,11 +29,21 @@ class InfluencerController extends Controller
     }
 
     public function requestSalary(Request $request){
-       
+        $payout = requestPayout::first();
+
         $this->validate( $request, [
             'amount' => 'required|integer',
         ]);
-    
+
+        if(!$payout->salary){
+            $notify[] = ['error', 'Salary Portal is not opened yet'];
+            return back()->withNotify($notify);
+        }
+        if($request->amount < 5000){
+            $notify[] = ['error', 'Minimum withdrawal is NGN 5,000'];
+            return back()->withNotify($notify);
+        }
+
         $user = Auth::user();
         $influencer = Influencer::where('user_id', $user->id)->first();
     

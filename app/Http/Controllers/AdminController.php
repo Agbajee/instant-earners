@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Mail\Alert;
 use Carbon\Carbon;
 
+use App\Models\Advert;
 use App\Models\Plan;
 use App\Models\Slug;
 use App\Models\User;
@@ -36,6 +37,7 @@ use App\Mail\ResendActivation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -1141,7 +1143,7 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->withInput()->withErrors($validator);
         } else {
-            $the_notification = siteNotifcation::where('id', 1)->first();
+            $the_notification = siteNotifcation::first();
             function stat($st)
             {
                 if ($st == 'on') {
@@ -1231,6 +1233,7 @@ class AdminController extends Controller
         // $d_r->status = $request->status ?? 0;
         $d_r->wallet = $request->wallet ?? 0;
         $d_r->allowi = $request->allowi ?? 0;
+        $d_r->salary = $request->salary ?? 0;
         $d_r->save();
 
         $notify = [];
@@ -1241,6 +1244,11 @@ class AdminController extends Controller
         }
     
         if ($request->allowi) {
+            $notify[] = ['info', 'Activity portal is opened!'];
+        } else{
+            $notify[] = ['warning', 'Activity portal is closed!'];
+        }
+        if ($request->salary) {
             $notify[] = ['info', 'Activity portal is opened!'];
         } else{
             $notify[] = ['warning', 'Activity portal is closed!'];
@@ -1576,6 +1584,7 @@ class AdminController extends Controller
         $plan->min_noref = $request->min_noref;
         $plan->min_ref = $request->min_ref;
         $plan->sponsored = $request->post_bonus;
+        $plan->advert = $request->advert_bonus;
         $plan->login = $request->login_bonus;
         if ($plan->save()) {
             $notify[] = ['info', 'Plan Created successfully'];
@@ -1596,6 +1605,7 @@ class AdminController extends Controller
         $plan->indirect_ref = $request->indirect_referral_bonus;
         $plan->registeration_bonus = $request->registeration_bonus;
         $plan->sponsored = $request->post_bonus;
+        $plan->advert = $request->advert_bonus;
         $plan->login = $request->login_bonus;
         $plan->min_noref = $request->min_noref;
         $plan->min_ref = $request->min_ref;
@@ -1856,13 +1866,21 @@ class AdminController extends Controller
         try {
             Mail::to($user)->send(new ResendActivation($data));
         } catch (\Exception $e) {
-            $notify[] = ['warning', 'Email may have not been sent successfully'];
+            Log::error('Mail sending error: ' . $e->getMessage());
+            $notify[] = ['warning', 'Email may have not been sent successfully. Check the logs for more information.'];
             return back()->withNotify($notify);
-        };
-
+        }
+    
+        if (Mail::failures()) {
+            Log::error('Mail sending failed for: ' . $user->email);
+            $notify[] = ['warning', 'Email may have not been sent successfully. Check the logs for more information.'];
+            return back()->withNotify($notify);
+        }
+    
         $notify[] = ['success', 'Email have been sent to ' . $user->email];
         return back()->withNotify($notify);
     }
+    
 
     public function sendGeneralMail()
     {
@@ -1894,4 +1912,106 @@ class AdminController extends Controller
         $notify[] = ['success', 'Email have been sent to ' . $user->count() . ' recipients'];
         return back()->withNotify($notify);
     }
+
+    //============Adverts===============//
+    public function allAdverts()
+    {
+        $data['dd1']    = Advert::all();
+        $data['dd']     = Advert::orderBy('created_at', 'DESC')->paginate(10);
+        $data['pt']     = Advert::where('status', 1)->get();
+        $data['dt']     = Advert::where('status', 0)->get();
+        $data['counter'] = 1;
+        return view('Admin.Advert.index', $data);
+    }
+    public function advertCreate()
+    {
+        return view('Admin.Advert.create');
+    }
+    public function advertCreatePost(Request $request)
+    {
+        $rules = [
+            'title' => 'required|max:1200|string',
+            'link' => 'required|string',
+            'contents' => 'nullable|max:120000|string',
+        ];
+
+        $messages = [
+            'title.required' => '* This field is required',
+            'title.max' => '* This Field is too long',
+            'title.string' => '* This field is invalid',
+
+            'contents.string' => '* This field is invalid',
+            'contents.max' => '* This field is too long',
+
+
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return Redirect::back()->withInput()->withErrors($validator);
+        } else {
+
+            if ($request->featured_image != '') {
+                $file = $request->file('featured_image');
+                $name = sha1(date('YmdHis') . Str::random(20));
+                $resize_name = Str::slug($request->title) . '-' . Str::random(5) . '.' . $file->getClientOriginalExtension();
+                Image::make($file)->save('images/treads/' . $resize_name);
+                $featured_image = $resize_name;
+            }
+            try {
+
+                $s = (new treadSlug);
+                $slug = $s->createSlug($request->title);
+                $tread = Advert::create([
+                    'title' => $request->title,
+                    'slug' => Str::slug($slug),
+                    'content' => $request->content_2,
+                    'ad_link' => $request->link,
+                    'featured_image' => $featured_image,
+                    'created_by' => Auth::user()->id,
+                ]);
+            } catch (\Exception $exception) {
+                $notify[] = ['error', 'Unable to create unique slug, please try a different one'];
+                return back()->withNotify($notify);
+            }
+
+            $notify[] = ['info', 'Advert Published successfully!'];
+            return \redirect()->to(route('allAdverts'))->withNotify($notify);
+        }
+    }
+
+    public function advertDelete($id)
+    {
+        $d = Advert::where('id', $id)->firstOrFail();
+        $d->delete();
+        $notify[] = ['info', 'Advert deleted successfully!'];
+        return back()->withNotify($notify);
+    }
+
+    public function advertEdit($id)
+    {
+        $tread = Advert::where('id', $id)->firstOrFail();
+        return view('Admin.Advert.single', compact('tread'));
+    }
+
+    public function advertEditPost(Request $request, $id)
+    {
+        $t = Advert::find($id);
+
+        $t->title = $request->title;
+        $t->slug = Str::slug($request->title);
+        $t->content = $request->contents;
+        $t->ad_link = $request->link;
+        if ($request->featured_image != '') {
+            $file = $request->file('featured_image');
+            $name = sha1(date('YmdHis') . Str::random(20));
+            $resize_name = Str::slug($request->title) . '-' . Str::random(5) . '.' . $file->getClientOriginalExtension();
+            Image::make($file)->save('images/treads/' . $resize_name);
+            $t->featured_image = $resize_name;
+        }
+
+        $t->save();
+        $notify[] = ['info', 'Tread updated successfully!'];
+        return back()->withNotify($notify);
+    }
+    //=========End Adverts==================//
 }
